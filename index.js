@@ -10,3 +10,9 @@ bot.on("ready", () => {
   bot.user.setActivity(`My prefix is !`);
   
 });
+
+bot.on("guildCreate", guild => {
+
+  console.log(`Joined a new server! (${guild.name}) This server has ${guild.memberCount} members currently!`);
+  
+});
