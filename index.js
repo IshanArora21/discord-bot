@@ -34,7 +34,7 @@ bot.on("message", async message => {
 
     if(command === "say") {
       repeat = args.join(" ");
-      message.delete();
+      message.delete().catch(error => {});
       message.channel.send(repeat); 
       
     }
