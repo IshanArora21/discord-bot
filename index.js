@@ -32,7 +32,11 @@ bot.on("message", async message => {
       const m = await message.channel.send("Ping?");
     }
 
-
+    if(command === "say") {
+      repeat = args.join(" ");
+      message.channel.send(repeat); 
+      
+    }
 
     if(command === "stop"){
       bot.destroy();
