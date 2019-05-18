@@ -20,7 +20,7 @@ bot.on("guildCreate", guild => {
 bot.on("message", async message => {
 
   if(message.author.bot) return;
-  if(message.content.indexOf("1") !== 0) return;
+  if(message.content.indexOf("!") !== 0) return;
 
 
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
