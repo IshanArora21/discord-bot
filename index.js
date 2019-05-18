@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const bot = new Discord.Client();
 
 const config = require("./config.json");
-bot.login(config.token);
+bot.login(process.env.BOT_TOKEN);
 
 bot.on("ready", () => {
   
