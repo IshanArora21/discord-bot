@@ -23,7 +23,7 @@ bot.on("message", async message => {
   if(message.content.indexOf("!") !== 0) return;
 
 
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(1).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
 
