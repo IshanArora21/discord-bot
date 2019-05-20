@@ -29,7 +29,7 @@ bot.on("message", async message => {
 
     if(command === "ping") {
  
-      const m = await message.channel.send("Ping?");
+      const m = await message.channel.send("Pong");
     }
 
     if(command === "say") {
