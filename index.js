@@ -7,7 +7,7 @@ bot.login(process.env.BOT_TOKEN);
 bot.on("ready", () => {
   
   console.log(`Successfully started. Users: ${bot.users.size} Servers: ${bot.guilds.size}`);
-  bot.user.setActivity(`My prefix is !`);
+  bot.user.setActivity(`Blame Ishan`);
   
 });
 
