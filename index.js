@@ -7,7 +7,7 @@ bot.login(process.env.BOT_TOKEN);
 bot.on("ready", () => {
   
   console.log(`Successfully started. Users: ${bot.users.size} Servers: ${bot.guilds.size}`);
-  bot.user.setActivity(`Blame Ishan`);
+  bot.user.setActivity(`!help for commands`);
   
 });
 
