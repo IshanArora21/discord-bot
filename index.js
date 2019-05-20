@@ -40,7 +40,7 @@ bot.on("message", async message => {
     }
   if(command === "dm") {
       dm = args.join(" ");
-      let dmTarget = message.guild.member(message.guild.members.get(args[0]));
+      let dmTarget = message.guild.member(message.mentions.users.first());
       if (!dmTarget) return message.channel.send("I cannot find the targetted user!");
       dmTarget.send(dm);
       
