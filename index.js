@@ -39,7 +39,8 @@ bot.on("message", async message => {
       
     }
 
-    if(command === "stop"){
-      bot.destroy();
+    if(command === "dm”){
+      dm = args.join(“ “);
+      message.author.send(dm);
     }
 });
