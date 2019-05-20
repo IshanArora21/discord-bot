@@ -39,9 +39,4 @@ bot.on("message", async message => {
       
     }
 
-    if(command === "dm”){
-      directmsg = args.join(" ");
-      message.delete().catch(error => {});
-      message.author.send(directmsg); ;
-    }
 });
