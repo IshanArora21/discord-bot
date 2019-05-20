@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 
-const config = require("./config.json");
-bot.login(config.token);
+
+bot.login(process.env.BOT_TOKEN);
 
 bot.on("ready", () => {
   
@@ -20,10 +20,10 @@ bot.on("guildCreate", guild => {
 bot.on("message", async message => {
 
   if(message.author.bot) return;
-  if(message.content.indexOf(config.prefix) !== 0) return;
+  if(message.content.indexOf("!") !== 0) return;
 
 
-    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const args = message.content.slice(1).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
 
