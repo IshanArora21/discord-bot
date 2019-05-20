@@ -38,5 +38,10 @@ bot.on("message", async message => {
       message.channel.send(repeat); 
       
     }
+  if(command === "dm") {
+      dm = args.join(" ");
+      bot.sendMessage(message.author, dm);
+      
+    }
 
 });
