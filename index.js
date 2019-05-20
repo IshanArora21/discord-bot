@@ -41,7 +41,7 @@ bot.on("message", async message => {
   if(command === "dm") {
       dm = args.join(" ");
       message.author.send(dm);
-      message.channel.send(args[2]);
+      message.channel.send(args[0]);
       
     }
 
