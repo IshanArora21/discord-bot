@@ -49,8 +49,7 @@ bot.on("message", async message => {
     
    if(command === "help" || "commands") {
      var commandsList = "!ping, !say [Message], !dm [User] [Message]"
-     let dmTarget = message.guild.member(message.mentions.users.first());
-     dmTarget.send(commandsList);
+     message.author.send(commandsList);
      
    }
   
