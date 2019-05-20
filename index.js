@@ -48,8 +48,25 @@ bot.on("message", async message => {
     }
     
    if(command === "help" || "commands") {
-     var commandsList = "!ping, !say [Message], !dm [User] [Message]"
-     message.author.send(commandsList);
+     message.channel.send({embed: {
+    color: 3447003,
+    title: "Command Menu!",
+    description: "All of the nifty features of this bot!",
+    fields: [{
+        name: "Ping",
+        value: "!ping - Returns the message Pong"
+      },
+      {
+        name: "DM",
+        value: "!dm (user) (message) - Sends a message to a user!"
+      },
+      {
+        name: "Say",
+        value: "!say (message) - Make the bot say a message!"
+      }
+    ]
+  }
+});
      
    }
   
