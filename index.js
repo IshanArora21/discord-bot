@@ -47,8 +47,8 @@ bot.on("message", async message => {
       
     }
     
-   if(command === "help" || "commands") {
-     message.channel.send({embed: {
+   if(command === "help") {
+     message.author.send({embed: {
     color: 3447003,
     title: "Command Menu!",
     description: "All of the nifty features of this bot!",
