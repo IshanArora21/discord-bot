@@ -53,5 +53,7 @@ bot.on("message", async message => {
      commands = args.join(" ");
      let dmTarget = message.guild.member(message.mentions.users.first());
      dmTarget.send(commandsList);
+     
+   }
   
 });
