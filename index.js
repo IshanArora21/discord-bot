@@ -40,7 +40,7 @@ bot.on("message", async message => {
     }
   if(command === "dm") {
       dm = args.join(" ");
-      bot.sendMessage(message.author, dm);
+      message.author.send(dm);
       
     }
 
