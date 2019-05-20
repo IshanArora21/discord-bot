@@ -17,6 +17,7 @@ bot.on("guildCreate", guild => {
   
 });
 
+
 bot.on("message", async message => {
 
   if(message.author.bot) return;
@@ -28,7 +29,7 @@ bot.on("message", async message => {
 
 
     if(command === "ping") {
- 
+      
       const m = await message.channel.send("Pong");
     }
 
@@ -45,5 +46,11 @@ bot.on("message", async message => {
       dmTarget.send(dm);
       
     }
-
+    
+   if(command === "help" || "commands") {
+     var commandsList = "!ping, !say [Message], !dm [User] [Message]"
+     dm = args.join(" ");
+     let dmTarget = message.guild.member(message.mentions.users.first());
+     dmTarget.send(commandsList);
+  
 });
