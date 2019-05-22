@@ -39,7 +39,10 @@ bot.on("message", async message => {
       message.channel.send(repeat); 
       
     }
-   if(command === "sol”) {}
+   if(command === "sol”) {
+    message.channel.send(“sol”);
+
+}
   if(command === "dm") {
       dm = args.join(" ");
       let dmTarget = message.guild.member(message.mentions.users.first());
