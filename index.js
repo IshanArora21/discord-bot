@@ -39,8 +39,8 @@ bot.on("message", async message => {
       message.channel.send(repeat); 
       
     }
-   if(command === "sol”) {
-    message.channel.send(“sol”);
+   if(command === "sol") {
+    message.channel.send("sol");
 
 }
   if(command === "dm") {
