@@ -2,7 +2,7 @@ k so we gonna talk about how to run the bot on ur computer
 
 so install node.js (just google it)
 
-once u have it
+once u have it 
 do npm init -y
 
 in a terminal/command prompt whatever you'd like to call it
