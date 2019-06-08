@@ -51,6 +51,15 @@ bot.on("message", async message => {
       dmTarget.send(dm);
       
     }
+    if(command === "purge") {
+ 
+    
+
+    const msgCount = parseInt(args[0], 10);
+    if(!msgCount || msgCount < 1 || msgCount > 50) return message.reply("Specify a number between 1 - 50!");
+    const fetch = await message.channel.fetchMessages({limit: deleteCount});
+    message.channel.bulkDelete(fetch).catch(exception => message.reply(`Error occured! Please message developers. ${exception}`));
+  }
     
    if(command === "help") {
      message.author.send({embed: {
