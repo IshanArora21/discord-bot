@@ -57,7 +57,7 @@ bot.on("message", async message => {
 
     const msgCount = parseInt(args[0], 10);
     if(!msgCount || msgCount < 1 || msgCount > 50) return message.reply("Specify a number between 1 - 50!");
-    const fetch = await message.channel.fetchMessages({limit: deleteCount});
+    const fetch = await message.channel.fetchMessages({limit: msgCount});
     message.channel.bulkDelete(fetch).catch(exception => message.reply(`Error occured! Please message developers. ${exception}`));
   }
     
