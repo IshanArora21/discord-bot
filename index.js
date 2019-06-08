@@ -30,7 +30,8 @@ bot.on("message", async message => {
 
     if(command === "ping") {
       
-      const m = await message.channel.send("Pong");
+      const lat = await message.channel.send("Ping!");
+      lat.edit(`Pong! Current latency is ${lat.createdTimestamp - message.createdTimestamp}ms`);
     }
 
     if(command === "say") {
