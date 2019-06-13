@@ -30,6 +30,7 @@ bot.on("message", async message => {
     if(command === "setQ"){
       question = args.join(" ");
       flashcards[i] = question;
+      message.channel.send("Succesfully added question!");
       i++;
     }
     if(command === "q"){
