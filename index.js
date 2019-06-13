@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-
-
+var flashcards = [];
+var i = 0;
 bot.login(process.env.BOT_TOKEN);
 
 bot.on("ready", () => {
@@ -26,7 +26,15 @@ bot.on("message", async message => {
 
     const args = message.content.slice(1).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-
+  
+    if(command === "setQ"){
+      question = args.join(" ");
+      flashcards[i] = question;
+      i++;
+    }
+    if(command === "q"){
+      message.channel.send(flashcards[parseInt(args[0],10)]);
+    }
 
     if(command === "ping") {
       
