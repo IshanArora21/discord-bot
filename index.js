@@ -1,7 +1,5 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-var flashcards = [];
-var i = 0;
 bot.login(process.env.BOT_TOKEN);
 
 bot.on("ready", () => {
