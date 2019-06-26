@@ -27,15 +27,6 @@ bot.on("message", async message => {
     const args = message.content.slice(1).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
   
-    if(command === "setQ"){
-      question = args.join(" ");
-      flashcards[i] = question;
-      message.channel.send("Succesfully added question!");
-      i++;
-    }
-    if(command === "q"){
-      message.channel.send(flashcards[parseInt(args[0],10)]);
-    }
 
     if(command === "ping") {
       
