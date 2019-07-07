@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const p = "!";
+let p = "!";
 bot.login(process.env.BOT_TOKEN);
 
 bot.on("ready", () => {
