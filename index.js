@@ -54,6 +54,7 @@ bot.on("message", async message => {
     if(command === "prefix"){
       p = args.join(" ");
       message.channel.send("Prefix has been changed! (" + p + ")");
+      bot.user.setActivity(p + `help for commands!`);
     }
       
     if(command === "purge") {
