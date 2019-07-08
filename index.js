@@ -26,7 +26,11 @@ bot.on("message", async message => {
     const args = message.content.slice(1).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
   
-
+    if(command === "warn") {
+      if(!message.member.hasPermission("MANAGE_MEMBERS")) return message.channel.send("You don't have the required permission, believe this is an error? Contact a developer");
+      let targUser = message.guild.member(message.mentions.users.first());
+   
+    }
     if(command === "ping") {
       
       const lat = await message.channel.send("Ping!");
