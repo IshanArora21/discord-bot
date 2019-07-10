@@ -26,16 +26,6 @@ bot.on("message", async message => {
     const args = message.content.slice(1).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
   
-    if(command === "warn") {
-      if(!message.member.hasPermission("MANAGE_MEMBERS")) return message.channel.send("You don't have the required permission, believe this is an error? Contact a developer");
-      let targUser = message.guild.member(message.mentions.users.first());
-      if(targUser.hasPermission("MANAGE_MEMBERS")) return message.channel.send("They have too many permissions to be warned!");
-      if(!targUser) return message.channel.send("Invalid target (Try mentioning someone)");
-      let warnReason = args.join(" ");
-      message.channel.send("@" + targUser + " You have been warned by a server moderator! + warnReason);
-      
-   
-    }
     if(command === "ping") {
       
       const lat = await message.channel.send("Ping!");
