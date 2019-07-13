@@ -1,1 +1,1 @@
-irrelevant now that this is being deployed as an application on heroku lol
+Simple, Testing, and Learning Bot to improve fluency in JavaScript 
