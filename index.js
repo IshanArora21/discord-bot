@@ -52,13 +52,16 @@ bot.on("message", async message => {
   if (command === "d") {
     var test = args[1];
     var dice = args[0];
+    var sum = 0;
     for (var i = 0; i < test; i++) {
       var response = [Math.floor(Math.random() * dice + 1)];
+      sum = sum + response;
       message.channel
         .send("You rolled " + response + "!")
         .then()
         .catch(console.error);
     }
+    message.channel.send("The sum is: " + sum);
   }
 
   if (command === "d20") {
