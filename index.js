@@ -49,6 +49,10 @@ bot.on("message", async message => {
       dmTarget.send(dm);
       
     }
+  if(command === "d20") {
+     var response = [Math.floor(Math.random() * (20) + 1)];
+     message.channel.send("You rolled " + response + "!").then().catch(console.error);
+  }
   
     if(command === "prefix"){
       p = args.join(" ");
