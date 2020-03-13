@@ -49,6 +49,20 @@ bot.on("message", async message => {
       return message.channel.send("I cannot find the targetted user!");
     dmTarget.send(dm);
   }
+    if (command === "d") {
+    var test = args[2];
+    var dice = args[1];
+    for (var i = 0; i < test; i++) {
+      var response = [Math.floor(Math.random() * dice + 1)];
+      message.channel
+        .send("You rolled " + response + "!")
+        .then()
+        .catch(console.error);
+    }
+  }
+  
+  
+  
   if (command === "d20") {
     var test = args.join(" ");
     for (var i = 0; i < test; i++) {
