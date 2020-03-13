@@ -50,7 +50,6 @@ bot.on("message", async message => {
     dmTarget.send(dm);
   }
   if (command === "d") {
-    
     var test = args[2];
     var dice = args[1];
     message.channel.send(test);
