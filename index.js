@@ -56,21 +56,21 @@ bot.on("message", async message => {
       .then()
       .catch(console.error);
   }
-    if (command === "d4") {
+  if (command === "d4") {
     var response = [Math.floor(Math.random() * 4 + 1)];
     message.channel
       .send("You rolled " + response + "!")
       .then()
       .catch(console.error);
   }
-    if (command === "d10") {
+  if (command === "d10") {
     var response = [Math.floor(Math.random() * 10 + 1)];
     message.channel
       .send("You rolled " + response + "!")
       .then()
       .catch(console.error);
   }
-    if (command === "d8") {
+  if (command === "d8") {
     var response = [Math.floor(Math.random() * 8 + 1)];
     message.channel
       .send("You rolled " + response + "!")
