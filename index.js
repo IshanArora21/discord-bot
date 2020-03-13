@@ -49,7 +49,7 @@ bot.on("message", async message => {
       return message.channel.send("I cannot find the targetted user!");
     dmTarget.send(dm);
   }
-    if (command === "d") {
+  if (command === "d") {
     var test = args[2];
     var dice = args[1];
     for (var i = 0; i < test; i++) {
@@ -60,9 +60,7 @@ bot.on("message", async message => {
         .catch(console.error);
     }
   }
-  
-  
-  
+
   if (command === "d20") {
     var test = args.join(" ");
     for (var i = 0; i < test; i++) {
