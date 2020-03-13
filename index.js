@@ -50,8 +50,11 @@ bot.on("message", async message => {
     dmTarget.send(dm);
   }
   if (command === "d") {
+    
     var test = args[2];
     var dice = args[1];
+    message.channel.send(test);
+    message.channel.send(dice);
     for (var i = 0; i < test; i++) {
       var response = [Math.floor(Math.random() * dice + 1)];
       message.channel
