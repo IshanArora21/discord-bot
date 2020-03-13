@@ -33,10 +33,11 @@ bot.on("message", async message => {
         message.createdTimestamp}ms`
     );
   }
-  if(command === "restart"){
-    message.channel.send('Restarting...')
-    .then(msg => bot.destroy())
-    .then(() => bot.login(process.env.BOT_TOKEN)); 
+  if (command === "restart") {
+    message.channel
+      .send("Restarting...")
+      .then(msg => bot.destroy())
+      .then(() => bot.login(process.env.BOT_TOKEN));
   }
   if (command === "say") {
     repeat = args.join(" ");
