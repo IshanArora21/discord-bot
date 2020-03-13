@@ -51,12 +51,12 @@ bot.on("message", async message => {
   }
   if (command === "d20") {
     var test = args.join(" ");
-    for(var i = 0; i < test; i++){
-    var response = [Math.floor(Math.random() * 20 + 1)];
-    message.channel
-      .send("You rolled " + response + "!")
-      .then()
-      .catch(console.error);
+    for (var i = 0; i < test; i++) {
+      var response = [Math.floor(Math.random() * 20 + 1)];
+      message.channel
+        .send("You rolled " + response + "!")
+        .then()
+        .catch(console.error);
     }
   }
   if (command === "d4") {
