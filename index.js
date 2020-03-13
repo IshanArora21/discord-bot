@@ -52,10 +52,10 @@ bot.on("message", async message => {
   if (command === "d") {
     var test = args[1];
     var dice = args[0];
-    var sum = 0;
+    var sum = parseInt("0");
     for (var i = 0; i < test; i++) {
       var response = [Math.floor(Math.random() * dice + 1)];
-      sum = sum + response;
+      sum = sum + parseInt(response);
       message.channel
         .send("You rolled " + response + "!")
         .then()
