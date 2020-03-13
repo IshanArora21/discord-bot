@@ -52,8 +52,6 @@ bot.on("message", async message => {
   if (command === "d") {
     var test = args[1];
     var dice = args[0];
-    message.channel.send("iterations: " + test);
-    message.channel.send(dice);
     for (var i = 0; i < test; i++) {
       var response = [Math.floor(Math.random() * dice + 1)];
       message.channel
