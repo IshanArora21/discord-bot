@@ -118,11 +118,13 @@ bot.on("message", async message => {
         message.reply(`Error occured! Please message developers. ${exception}`)
       );
   }
-  
+
   if (command === "uwu") {
-      message.author.send("https://tenor.com/view/animu-anime-goodnight-gif-14037293 -Ishan")
+    message.author.send(
+      "https://tenor.com/view/animu-anime-goodnight-gif-14037293 -Ishan"
+    );
   }
-  
+
   if (command === "help") {
     message.author.send({
       embed: {
