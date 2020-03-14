@@ -120,9 +120,9 @@ bot.on("message", async message => {
   }
 
   if (command === "uwu") {
-    message.author.send({
+    message.channel.send(
       "https://tenor.com/view/animu-anime-goodnight-gif-14037293 -Ishan"
-    });
+    );
   }
 
   if (command === "help") {
