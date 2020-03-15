@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const ytdl = require('ytdl-core');
+const ytdl = require("ytdl-core");
 const bot = new Discord.Client();
 let p = "!";
 bot.login(process.env.BOT_TOKEN);
