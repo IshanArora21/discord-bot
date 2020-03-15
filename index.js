@@ -19,6 +19,7 @@ bot.on("guildCreate", guild => {
 });
 
 async function execute(message, serverQueue) {
+        message.channel.send("1");
   const args = message.content.split(" ");
 
   const voiceChannel = message.member.voiceChannel;
@@ -32,6 +33,7 @@ async function execute(message, serverQueue) {
       "I need the permissions to join and speak in your voice channel!"
     );
   }
+          message.channel.send("2");
 
   const songInfo = await ytdl.getInfo(args[1]);
   const song = {
@@ -48,11 +50,11 @@ async function execute(message, serverQueue) {
       volume: 5,
       playing: true
     };
-
+        message.channel.send("3");
     queue.set(message.guild.id, queueContruct);
 
     queueContruct.songs.push(song);
-
+        message.channel.send("4");
     try {
       message.channel.send("hit in execute");
       var connection = await voiceChannel.join();
@@ -65,6 +67,7 @@ async function execute(message, serverQueue) {
       return message.channel.send(err);
     }
   } else {
+            message.channel.send("5");
     serverQueue.songs.push(song);
     console.log(serverQueue.songs);
     return message.channel.send(`${song.title} has been added to the queue!`);
