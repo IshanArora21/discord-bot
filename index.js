@@ -24,16 +24,7 @@ async function execute(message, serverQueue) {
 
   const voiceChannel = message.member.voiceChannel;
   message.channel.send("1.5");
-  if (!voiceChannel)
-    return message.channel.send(
-      "You need to be in a voice channel to play music!"
-    );
-  const permissions = voiceChannel.permissionsFor(message.bot.user);
-  if (!permissions.has("CONNECT") || !permissions.has("SPEAK")) {
-    return message.channel.send(
-      "I need the permissions to join and speak in your voice channel!"
-    );
-  }
+ 
   message.channel.send("2");
 
   const songInfo = await ytdl.getInfo(args[1]);
