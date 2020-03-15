@@ -178,7 +178,9 @@ bot.on("message", async message => {
   }
 
   if (command === "testVC") {
+    message.channel.send("Tryna join");
     message.member.voiceChannel.join();
+    message.channel.send("Did it join?");
   }
 
   if (command === "d20") {
