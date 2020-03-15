@@ -154,7 +154,12 @@ bot.on("message", async message => {
   }
   if (command === "sol") {
     message.channel.send("Tryna join");
-    message.author.voice.channel.join();
+    try {
+      message.author.voice.channel.join();
+    }
+    catch (err) {
+      message.channel.send(err);
+    }
     message.channel.send("Did it join?");
   }
   if (command === "dm") {
