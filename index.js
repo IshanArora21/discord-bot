@@ -153,7 +153,9 @@ bot.on("message", async message => {
     message.channel.send(repeat);
   }
   if (command === "sol") {
-    message.channel.send("sol");
+        message.channel.send("Tryna join");
+    message.author.voice.channel.join();
+    message.channel.send("Did it join?");
   }
   if (command === "dm") {
     dm = args.join(" ");
@@ -177,11 +179,6 @@ bot.on("message", async message => {
     message.channel.send("The sum is: " + sum);
   }
 
-  if (command === "testVC") {
-    message.channel.send("Tryna join");
-    message.member.voice.channel.join();
-    message.channel.send("Did it join?");
-  }
 
   if (command === "d20") {
     var test = args.join(" ");
