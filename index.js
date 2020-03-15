@@ -19,6 +19,7 @@ bot.on("guildCreate", guild => {
 });
 
 async function execute(message, serverQueue) {
+  message.channel.send("hit in execute");
   const args = message.content.split(" ");
 
   const voiceChannel = message.member.voiceChannel;
