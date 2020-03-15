@@ -119,7 +119,7 @@ bot.on("message", async message => {
     .trim()
     .split(/ +/g);
   const command = args.shift().toLowerCase();
-	const serverQueue = queue.get(message.guild.id);
+  const serverQueue = queue.get(message.guild.id);
   if (command === "play") {
     execute(message, serverQueue);
     return;
