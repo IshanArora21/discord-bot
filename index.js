@@ -19,7 +19,6 @@ bot.on("guildCreate", guild => {
 });
 
 async function execute(message, serverQueue) {
-  message.channel.send("hit in execute");
   const args = message.content.split(" ");
 
   const voiceChannel = message.member.voiceChannel;
@@ -55,10 +54,12 @@ async function execute(message, serverQueue) {
     queueContruct.songs.push(song);
 
     try {
+        message.channel.send("hit in execute");
       var connection = await voiceChannel.join();
       queueContruct.connection = connection;
       play(message.guild, queueContruct.songs[0]);
     } catch (err) {
+        message.channel.send("hit in catch *WARNING*");
       console.log(err);
       queue.delete(message.guild.id);
       return message.channel.send(err);
