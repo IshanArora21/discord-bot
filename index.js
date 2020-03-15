@@ -23,6 +23,7 @@ async function execute(message, serverQueue) {
   const args = message.content.split(" ");
 
   const voiceChannel = message.member.voiceChannel;
+  message.channel.send("1.5");
   if (!voiceChannel)
     return message.channel.send(
       "You need to be in a voice channel to play music!"
