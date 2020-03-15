@@ -50,8 +50,11 @@ async function execute(message, serverQueue) {
     try {
       message.channel.send("hit in execute");
       var connection = await voiceChannel.join();
+      message.channel.send("4.25");
       queueContruct.connection = connection;
+      message.channel.send("4.5");
       play(message.guild, queueContruct.songs[0]);
+      message.channel.send("4.75");
     } catch (err) {
       message.channel.send("hit in catch *WARNING*");
       console.log(err);
