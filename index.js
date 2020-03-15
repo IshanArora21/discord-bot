@@ -22,7 +22,7 @@ async function execute(message, serverQueue) {
   message.channel.send("hit in execute");
   const args = message.content.split(" ");
 
-  const voiceChannel = message.member.voiceChannel;
+  const voiceChannel = message.author.voiceChannel;
   if (!voiceChannel)
     return message.channel.send(
       "You need to be in a voice channel to play music!"
@@ -71,7 +71,7 @@ async function execute(message, serverQueue) {
 }
 
 function skip(message, serverQueue) {
-  if (!message.member.voiceChannel)
+  if (!message.author.voiceChannel)
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
@@ -81,12 +81,13 @@ function skip(message, serverQueue) {
 }
 
 function stop(message, serverQueue) {
-  if (!message.member.voiceChannel)
+  if (!message.author.voiceChannel)
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
+  message.channel.send("Stopped songs...");
 }
 
 function play(guild, song) {
