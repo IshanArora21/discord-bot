@@ -40,7 +40,7 @@ async function execute(message, serverQueue) {
     url: songInfo.video_url
   };
 
-  if (!serverQueue) {
+
     const queueContruct = {
       textChannel: message.channel,
       voiceChannel: voiceChannel,
@@ -48,7 +48,7 @@ async function execute(message, serverQueue) {
       songs: [],
       volume: 5,
       playing: true
-    };
+
 
     queue.set(message.guild.id, queueContruct);
 
