@@ -71,7 +71,7 @@ async function execute(message, serverQueue) {
 }
 
 function skip(message, serverQueue) {
-  if (!message.author.voiceChannel)
+  if (!message.member.voiceChannel)
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
@@ -87,7 +87,8 @@ function stop(message, serverQueue) {
     );
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
-  message.channel.send("Stopped songs...");
+  return message.channel.send("Stopped songs...");
+
 }
 
 function play(guild, song) {
