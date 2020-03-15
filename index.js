@@ -54,12 +54,12 @@ async function execute(message, serverQueue) {
     queueContruct.songs.push(song);
 
     try {
-        message.channel.send("hit in execute");
+      message.channel.send("hit in execute");
       var connection = await voiceChannel.join();
       queueContruct.connection = connection;
       play(message.guild, queueContruct.songs[0]);
     } catch (err) {
-        message.channel.send("hit in catch *WARNING*");
+      message.channel.send("hit in catch *WARNING*");
       console.log(err);
       queue.delete(message.guild.id);
       return message.channel.send(err);
