@@ -177,10 +177,10 @@ bot.on("message", async message => {
     message.channel.send("The sum is: " + sum);
   }
 
-  if(command === "testVC"){
+  if (command === "testVC") {
     message.member.voiceChannel.join();
   }
-  
+
   if (command === "d20") {
     var test = args.join(" ");
     for (var i = 0; i < test; i++) {
