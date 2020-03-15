@@ -156,6 +156,7 @@ bot.on("message", async message => {
     message.channel.send("Tryna join");
     try {
       message.member.voiceChannel.join();
+      message.channel.send("just keep swimming");
     } catch (err) {
       message.channel.send(err);
     }
