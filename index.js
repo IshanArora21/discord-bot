@@ -88,7 +88,6 @@ function stop(message, serverQueue) {
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
   return message.channel.send("Stopped songs...");
-
 }
 
 function play(guild, song) {
