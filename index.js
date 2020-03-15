@@ -24,7 +24,7 @@ async function execute(message, serverQueue) {
 
   const voiceChannel = message.member.voiceChannel;
   message.channel.send("1.5");
- 
+
   message.channel.send("2");
 
   const songInfo = await ytdl.getInfo(args[1]);
