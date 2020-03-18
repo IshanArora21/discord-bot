@@ -32,7 +32,7 @@ async function execute(message, serverQueue) {
     title: songInfo.title,
     url: songInfo.video_url
   };
-
+  message.channel.send("2.5");
   if (!serverQueue) {
     const queueContruct = {
       textChannel: message.channel,
