@@ -33,7 +33,7 @@ async function execute(message, serverQueue) {
       url: songInfo.video_url
     };
   } catch (err) {
-    message.channel.send("catch");
+    message.channel.send(err);
   }
   message.channel.send("2.5");
   if (!serverQueue) {
