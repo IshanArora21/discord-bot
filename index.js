@@ -27,12 +27,12 @@ async function execute(message, serverQueue) {
 
   message.channel.send("2");
   try {
-  const songInfo = await ytdl.getInfo(args[1]);
-  const song = {
-    title: songInfo.title,
-    url: songInfo.video_url
-  };}
-  catch(err){
+    const songInfo = await ytdl.getInfo(args[1]);
+    const song = {
+      title: songInfo.title,
+      url: songInfo.video_url
+    };
+  } catch (err) {
     message.channel.send(err);
   }
   message.channel.send("2.5");
