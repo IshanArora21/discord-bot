@@ -1,20 +1,18 @@
-
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const client = new Discord.Client();
-const ytdl = require('ytdl-core');
-const request = require('request');
-const fs = require('fs');
-const getYoutubeID = require('get-youtube-id');
-const youtubeInfo = require('youtube-info');
-require('dotenv').config();
+const ytdl = require("ytdl-core");
+const request = require("request");
+const fs = require("fs");
+const getYoutubeID = require("get-youtube-id");
+const youtubeInfo = require("youtube-info");
+require("dotenv").config();
 
-let config = require('./settings.json');
+let config = require("./settings.json");
 
 const clientToken = process.env.client_TOKEN;
 const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
 const prefix = config.prefix;
 const role = config.role;
-
 
 const client = new Discord.Client();
 let p = "!";
@@ -33,15 +31,16 @@ client.on("guildCreate", guild => {
   );
 });
 
-
-
 client.on("message", async message => {
   if (message.author.client) return;
   if (message.content.indexOf(p) !== 0) return;
 
   const member = message.member;
   const msg = message.content.toLowerCase();
-  const args = message.content.split(' ').slice(1).join(' ');
+  const args = message.content
+    .split(" ")
+    .slice(1)
+    .join(" ");
 
   if (!guilds[message.guild.id]) {
     guilds[message.guild.id] = {
@@ -51,87 +50,119 @@ client.on("message", async message => {
       dispatcher: null,
       voiceChannel: null,
       skipReq: 0,
-      skippers: [], 
+      skippers: [],
       playedTracks: []
     };
   }
 
   if (message.author.equals(client.user) || message.author.client) return;
 
-  if (msg.startsWith(p + 'play')) {
+  if (msg.startsWith(p + "play")) {
     if (member.voiceChannel || guilds[message.guild.id].voiceChannel != null) {
-      if (guilds[message.guild.id].queue.length > 0 || guilds[message.guild.id].isPlaying) {
-        getID(args, function (id) {
+      if (
+        guilds[message.guild.id].queue.length > 0 ||
+        guilds[message.guild.id].isPlaying
+      ) {
+        getID(args, function(id) {
           addToQueue(id, message);
-          youtubeInfo(id, function (err, videoinfo) {
+          youtubeInfo(id, function(err, videoinfo) {
             if (err) {
               throw new Error(err);
             }
             guilds[message.guild.id].queueNames.push(videoinfo.title);
             addToPlayedTracks(message, videoinfo, message.author);
-            message.reply('the song: **' + videoinfo.title + '** has been added to the queue.');
+            message.reply(
+              "the song: **" +
+                videoinfo.title +
+                "** has been added to the queue."
+            );
           });
         });
       } else {
         guilds[message.guild.id].isPlaying = true;
-        getID(args, function (id) {
+        getID(args, function(id) {
           guilds[message.guild.id].queue.push(id);
           playMusic(id, message);
-          youtubeInfo(id, function (err, videoinfo) {
+          youtubeInfo(id, function(err, videoinfo) {
             if (err) {
               throw new Error(err);
             }
             guilds[message.guild.id].queueNames.push(videoinfo.title);
             addToPlayedTracks(message, videoinfo, message.author);
-            message.reply('the song: **' + videoinfo.title + '** is now playing!');
+            message.reply(
+              "the song: **" + videoinfo.title + "** is now playing!"
+            );
           });
         });
       }
     } else if (member.voiceChannel === false) {
-      message.reply('you have to be in a voice channel to play music!');
+      message.reply("you have to be in a voice channel to play music!");
     } else {
-      message.reply('you have to be in a voice channel to play music!');
+      message.reply("you have to be in a voice channel to play music!");
     }
-  } else if (msg.startsWith(p + 'skip')) {
+  } else if (msg.startsWith(p + "skip")) {
     if (guilds[message.guild.id].skippers.indexOf(message.author.id) === -1) {
       guilds[message.guild.id].skippers.push(message.author.id);
       guilds[message.guild.id].skipReq++;
-      if (guilds[message.guild.id].skipReq >=
-      Math.ceil((guilds[message.guild.id].voiceChannel.members.size - 1) / 2) || message.guild.member(message.author.id).roles.find(roles => roles.name === role)) {
+      if (
+        guilds[message.guild.id].skipReq >=
+          Math.ceil(
+            (guilds[message.guild.id].voiceChannel.members.size - 1) / 2
+          ) ||
+        message.guild
+          .member(message.author.id)
+          .roles.find(roles => roles.name === role)
+      ) {
         skipMusic(message);
-        message.reply('your skip request has been accepted. The current song will be skipped!');
+        message.reply(
+          "your skip request has been accepted. The current song will be skipped!"
+        );
       } else {
-        message.reply('your skip request has been accepted. You need **' +
-        (Math.ceil((guilds[message.guild.id].voiceChannel.members.size - 1) / 2) -
-        guilds[message.guild.id].skipReq) + '** more skip request(s)!');
+        message.reply(
+          "your skip request has been accepted. You need **" +
+            (Math.ceil(
+              (guilds[message.guild.id].voiceChannel.members.size - 1) / 2
+            ) -
+              guilds[message.guild.id].skipReq) +
+            "** more skip request(s)!"
+        );
       }
     } else {
-      message.reply('you already submitted a skip request.');
+      message.reply("you already submitted a skip request.");
     }
-  } else if (msg.startsWith(p + 'queue')) {
-    var codeblock = '```';
+  } else if (msg.startsWith(p + "queue")) {
+    var codeblock = "```";
     for (let i = 0; i < guilds[message.guild.id].queueNames.length; i++) {
-      let temp = (i + 1) + '. ' + guilds[message.guild.id].queueNames[i] +
-      (i === 0 ? ' **(Current Song)**' : '') + '\n';
+      let temp =
+        i +
+        1 +
+        ". " +
+        guilds[message.guild.id].queueNames[i] +
+        (i === 0 ? " **(Current Song)**" : "") +
+        "\n";
       if ((codeblock + temp).length <= 2000 - 3) {
         codeblock += temp;
       } else {
-        codeblock += '```';
+        codeblock += "```";
         message.channel.send(codeblock);
-        codeblock = '```';
+        codeblock = "```";
       }
     }
 
-    codeblock += '```';
+    codeblock += "```";
     message.channel.send(codeblock);
-  } else if (msg.startsWith(p + 'stop')) {
+  } else if (msg.startsWith(p + "stop")) {
     if (guilds[message.guild.id].isPlaying === false) {
-      message.reply('no music is playing!');
+      message.reply("no music is playing!");
       return;
     }
 
-    if (message.guild.member(message.author.id).roles.find(roles => roles.name === role)) {
-      message.reply('stopping the music...');
+    if (
+      message.guild
+        .member(message.author.id)
+        .roles.find(roles => roles.name === role)
+    ) {
+      message.reply("stopping the music...");
 
       guilds[message.guild.id].queue = [];
       guilds[message.guild.id].queueNames = [];
@@ -141,15 +172,23 @@ client.on("message", async message => {
     } else {
       message.reply("nice try, but only " + role + "s can stop me!");
     }
-
-  } else if (msg.startsWith(p + 'history')){
+  } else if (msg.startsWith(p + "history")) {
     let defaultTrackCount = 30;
-    argArr = args.split(' ');
-    let includeUsers = argArr.some(val => val != null && val.toLowerCase().indexOf('user') >= 0);
-    let includeTimes = argArr.some(val => val != null && val.toLowerCase().indexOf('time') >= 0);
-    let historyTxt = getPlayedTracksText(message, tryParseInt(args, defaultTrackCount), includeUsers, includeTimes);
+    argArr = args.split(" ");
+    let includeUsers = argArr.some(
+      val => val != null && val.toLowerCase().indexOf("user") >= 0
+    );
+    let includeTimes = argArr.some(
+      val => val != null && val.toLowerCase().indexOf("time") >= 0
+    );
+    let historyTxt = getPlayedTracksText(
+      message,
+      tryParseInt(args, defaultTrackCount),
+      includeUsers,
+      includeTimes
+    );
     let historyMsgs = splitTextByLines(historyTxt);
-    for (let i = 0; i < historyMsgs.length; i++){
+    for (let i = 0; i < historyMsgs.length; i++) {
       message.reply(historyMsgs[i]);
     }
   }
