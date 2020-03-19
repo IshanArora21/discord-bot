@@ -1,122 +1,158 @@
-const Discord = require("discord.js");
-const ytdl = require("ytdl-core");
-const bot = new Discord.Client();
-let p = "!";
-const queue = new Map();
-bot.login(process.env.BOT_TOKEN);
 
-bot.on("ready", () => {
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const ytdl = require('ytdl-core');
+const request = require('request');
+const fs = require('fs');
+const getYoutubeID = require('get-youtube-id');
+const youtubeInfo = require('youtube-info');
+require('dotenv').config();
+
+let config = require('./settings.json');
+
+const clientToken = process.env.client_TOKEN;
+const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
+const prefix = config.prefix;
+const role = config.role;
+
+
+const client = new Discord.Client();
+let p = "!";
+client.login(process.env.BOT_TOKEN);
+
+client.on("ready", () => {
   console.log(
-    `Successfully started. Users: ${bot.users.size} Servers: ${bot.guilds.size}`
+    `Successfully started. Users: ${client.users.size} Servers: ${client.guilds.size}`
   );
-  bot.user.setActivity(`!help for commands`);
+  client.user.setActivity(`!help for commands`);
 });
 
-bot.on("guildCreate", guild => {
+client.on("guildCreate", guild => {
   console.log(
     `Joined a new server! (${guild.name}) This server has ${guild.memberCount} members currently!`
   );
 });
 
-async function execute(message, serverQueue) {
-  message.channel.send("1");
-  const args = message.content.split(" ");
 
-  const voiceChannel = message.member.voiceChannel;
-  message.channel.send("1.5");
 
-  message.channel.send("2");
-  try {
-    const songInfo = await ytdl.getInfo(args[1]);
-    const song = {
-      title: songInfo.title,
-      url: songInfo.video_url
-    };
-  } catch (err) {
-    message.channel.send("catch");
-  }
-  message.channel.send("2.5");
-  if (!serverQueue) {
-    const queueContruct = {
-      textChannel: message.channel,
-      voiceChannel: voiceChannel,
-      connection: null,
-      songs: [],
-      volume: 5,
-      playing: true
-    };
-    message.channel.send("3");
-    queue.set(message.guild.id, queueContruct);
-
-    queueContruct.songs.push(song);
-    message.channel.send("4");
-    try {
-      message.channel.send("hit in execute");
-      var connection = await voiceChannel.join();
-      message.channel.send("4.25");
-      queueContruct.connection = connection;
-      message.channel.send("4.5");
-      play(message.guild, queueContruct.songs[0]);
-      message.channel.send("4.75");
-    } catch (err) {
-      message.channel.send("hit in catch *WARNING*");
-      console.log(err);
-      queue.delete(message.guild.id);
-      return message.channel.send(err);
-    }
-  } else {
-    message.channel.send("5");
-    serverQueue.songs.push(song);
-    console.log(serverQueue.songs);
-    return message.channel.send(`${song.title} has been added to the queue!`);
-  }
-}
-
-function skip(message, serverQueue) {
-  if (!message.member.voiceChannel)
-    return message.channel.send(
-      "You have to be in a voice channel to stop the music!"
-    );
-  if (!serverQueue)
-    return message.channel.send("There is no song that I could skip!");
-  serverQueue.connection.dispatcher.end();
-}
-
-function stop(message, serverQueue) {
-  if (!message.member.voiceChannel)
-    return message.channel.send(
-      "You have to be in a voice channel to stop the music!"
-    );
-  serverQueue.songs = [];
-  serverQueue.connection.dispatcher.end();
-  return message.channel.send("Stopped songs...");
-}
-
-function play(guild, song) {
-  const serverQueue = queue.get(guild.id);
-
-  if (!song) {
-    serverQueue.voiceChannel.leave();
-    queue.delete(guild.id);
-    return;
-  }
-
-  const dispatcher = serverQueue.connection
-    .playStream(ytdl(song.url))
-    .on("end", () => {
-      console.log("Music ended!");
-      serverQueue.songs.shift();
-      play(guild, serverQueue.songs[0]);
-    })
-    .on("error", error => {
-      console.error(error);
-    });
-  dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-}
-
-bot.on("message", async message => {
-  if (message.author.bot) return;
+client.on("message", async message => {
+  if (message.author.client) return;
   if (message.content.indexOf(p) !== 0) return;
+
+  const member = message.member;
+  const msg = message.content.toLowerCase();
+  const args = message.content.split(' ').slice(1).join(' ');
+
+  if (!guilds[message.guild.id]) {
+    guilds[message.guild.id] = {
+      queue: [],
+      queueNames: [],
+      isPlaying: false,
+      dispatcher: null,
+      voiceChannel: null,
+      skipReq: 0,
+      skippers: [], 
+      playedTracks: []
+    };
+  }
+
+  if (message.author.equals(client.user) || message.author.client) return;
+
+  if (msg.startsWith(p + 'play')) {
+    if (member.voiceChannel || guilds[message.guild.id].voiceChannel != null) {
+      if (guilds[message.guild.id].queue.length > 0 || guilds[message.guild.id].isPlaying) {
+        getID(args, function (id) {
+          addToQueue(id, message);
+          youtubeInfo(id, function (err, videoinfo) {
+            if (err) {
+              throw new Error(err);
+            }
+            guilds[message.guild.id].queueNames.push(videoinfo.title);
+            addToPlayedTracks(message, videoinfo, message.author);
+            message.reply('the song: **' + videoinfo.title + '** has been added to the queue.');
+          });
+        });
+      } else {
+        guilds[message.guild.id].isPlaying = true;
+        getID(args, function (id) {
+          guilds[message.guild.id].queue.push(id);
+          playMusic(id, message);
+          youtubeInfo(id, function (err, videoinfo) {
+            if (err) {
+              throw new Error(err);
+            }
+            guilds[message.guild.id].queueNames.push(videoinfo.title);
+            addToPlayedTracks(message, videoinfo, message.author);
+            message.reply('the song: **' + videoinfo.title + '** is now playing!');
+          });
+        });
+      }
+    } else if (member.voiceChannel === false) {
+      message.reply('you have to be in a voice channel to play music!');
+    } else {
+      message.reply('you have to be in a voice channel to play music!');
+    }
+  } else if (msg.startsWith(p + 'skip')) {
+    if (guilds[message.guild.id].skippers.indexOf(message.author.id) === -1) {
+      guilds[message.guild.id].skippers.push(message.author.id);
+      guilds[message.guild.id].skipReq++;
+      if (guilds[message.guild.id].skipReq >=
+      Math.ceil((guilds[message.guild.id].voiceChannel.members.size - 1) / 2) || message.guild.member(message.author.id).roles.find(roles => roles.name === role)) {
+        skipMusic(message);
+        message.reply('your skip request has been accepted. The current song will be skipped!');
+      } else {
+        message.reply('your skip request has been accepted. You need **' +
+        (Math.ceil((guilds[message.guild.id].voiceChannel.members.size - 1) / 2) -
+        guilds[message.guild.id].skipReq) + '** more skip request(s)!');
+      }
+    } else {
+      message.reply('you already submitted a skip request.');
+    }
+  } else if (msg.startsWith(p + 'queue')) {
+    var codeblock = '```';
+    for (let i = 0; i < guilds[message.guild.id].queueNames.length; i++) {
+      let temp = (i + 1) + '. ' + guilds[message.guild.id].queueNames[i] +
+      (i === 0 ? ' **(Current Song)**' : '') + '\n';
+      if ((codeblock + temp).length <= 2000 - 3) {
+        codeblock += temp;
+      } else {
+        codeblock += '```';
+        message.channel.send(codeblock);
+        codeblock = '```';
+      }
+    }
+
+    codeblock += '```';
+    message.channel.send(codeblock);
+  } else if (msg.startsWith(p + 'stop')) {
+    if (guilds[message.guild.id].isPlaying === false) {
+      message.reply('no music is playing!');
+      return;
+    }
+
+    if (message.guild.member(message.author.id).roles.find(roles => roles.name === role)) {
+      message.reply('stopping the music...');
+
+      guilds[message.guild.id].queue = [];
+      guilds[message.guild.id].queueNames = [];
+      guilds[message.guild.id].isPlaying = false;
+      guilds[message.guild.id].dispatcher.end();
+      guilds[message.guild.id].voiceChannel.leave();
+    } else {
+      message.reply("nice try, but only " + role + "s can stop me!");
+    }
+
+  } else if (msg.startsWith(p + 'history')){
+    let defaultTrackCount = 30;
+    argArr = args.split(' ');
+    let includeUsers = argArr.some(val => val != null && val.toLowerCase().indexOf('user') >= 0);
+    let includeTimes = argArr.some(val => val != null && val.toLowerCase().indexOf('time') >= 0);
+    let historyTxt = getPlayedTracksText(message, tryParseInt(args, defaultTrackCount), includeUsers, includeTimes);
+    let historyMsgs = splitTextByLines(historyTxt);
+    for (let i = 0; i < historyMsgs.length; i++){
+      message.reply(historyMsgs[i]);
+    }
+  }
 
   const args = message.content
     .slice(1)
@@ -147,8 +183,8 @@ bot.on("message", async message => {
   if (command === "restart") {
     message.channel
       .send("Restarting...")
-      .then(msg => bot.destroy())
-      .then(() => bot.login(process.env.BOT_TOKEN));
+      .then(msg => client.destroy())
+      .then(() => client.login(process.env.client_TOKEN));
   }
   if (command === "say") {
     repeat = args.join(" ");
@@ -221,8 +257,8 @@ bot.on("message", async message => {
 
   if (command === "prefix") {
     p = args.join(" ");
-    message.channel.send("Prefix has been changed! (" + p + ")");
-    bot.user.setActivity(p + `help for commands!`);
+    message.channel.send("prefix has been changed! (" + p + ")");
+    client.user.setActivity(p + `help for commands!`);
   }
 
   if (command === "purge") {
@@ -248,7 +284,7 @@ bot.on("message", async message => {
       embed: {
         color: 3447003,
         title: "Command Menu!",
-        description: "All of the nifty features of this bot!",
+        description: "All of the nifty features of this client!",
         fields: [
           {
             name: "Ping",
@@ -260,7 +296,7 @@ bot.on("message", async message => {
           },
           {
             name: "Say",
-            value: "!say (message) - Make the bot say a message!"
+            value: "!say (message) - Make the client say a message!"
           }
         ]
       }
