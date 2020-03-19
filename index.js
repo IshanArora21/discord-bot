@@ -26,15 +26,12 @@ async function execute(message, serverQueue) {
   message.channel.send("1.5");
 
   message.channel.send("2");
-  try {
     const songInfo = await ytdl.getInfo(args[1]);
     const song = {
       title: songInfo.title,
       url: songInfo.video_url
     };
-  } catch (err) {
     message.channel.send(err);
-  }
   message.channel.send("2.5");
   if (!serverQueue) {
     const queueContruct = {
@@ -50,7 +47,6 @@ async function execute(message, serverQueue) {
 
     queueContruct.songs.push(song);
     message.channel.send("4");
-    try {
       message.channel.send("hit in execute");
       var connection = await voiceChannel.join();
       message.channel.send("4.25");
@@ -58,12 +54,9 @@ async function execute(message, serverQueue) {
       message.channel.send("4.5");
       play(message.guild, queueContruct.songs[0]);
       message.channel.send("4.75");
-    } catch (err) {
       message.channel.send("hit in catch *WARNING*");
       console.log(err);
       queue.delete(message.guild.id);
-      return message.channel.send(err);
-    }
   } else {
     message.channel.send("5");
     serverQueue.songs.push(song);
