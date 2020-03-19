@@ -10,7 +10,7 @@ require("dotenv").config();
 const botToken = process.env.BOT_TOKEN;
 const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
 const prefix = "!";
-const role = "Owner";
+const role = "DJ";
 
 let guilds = {};
 
