@@ -11,7 +11,7 @@ const clientToken = process.env.BOT_TOKEN;
 const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
 const role = "DJ";
 
-let p = "!";
+const p = "!";
 let guilds = {};
 client.login(process.env.BOT_TOKEN);
 
