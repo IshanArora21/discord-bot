@@ -5,7 +5,7 @@ const request = require("request");
 const fs = require("fs");
 const getYoutubeID = require("get-youtube-id");
 const youtubeInfo = require("youtube-info");
-require('dotenv').config();
+require("dotenv").config();
 
 const clientToken = process.env.BOT_TOKEN;
 const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
