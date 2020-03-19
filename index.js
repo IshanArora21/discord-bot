@@ -148,15 +148,11 @@ bot.on("message", async message => {
     message.delete().catch(error => {});
     message.channel.send(repeat);
   }
-  if (command === "sol") {
-    message.channel.send("Tryna join");
-    try {
+  if (command === "summon") {
       message.member.voiceChannel.join();
-      message.channel.send("just keep swimming");
-    } catch (err) {
-      message.channel.send(err);
-    }
-    message.channel.send("Did it join?");
+  }
+  if (command === "leave") {
+    message.member.voiceChannel.leave();
   }
   if (command === "dm") {
     dm = args.join(" ");
