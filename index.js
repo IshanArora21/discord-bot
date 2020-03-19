@@ -187,7 +187,6 @@ client.on("message", async message => {
       message.reply(historyMsgs[i]);
     }
   }
-
 });
 
 function isYoutube(str) {
