@@ -5,14 +5,11 @@ const request = require("request");
 const fs = require("fs");
 const getYoutubeID = require("get-youtube-id");
 const youtubeInfo = require("youtube-info");
-require("dotenv").config();
 
-let config = require("./settings.json");
 
 const clientToken = process.env.client_TOKEN;
 const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
-const prefix = config.prefix;
-const role = config.role;
+const role = "DJ";
 
 const client = new Discord.Client();
 let p = "!";
