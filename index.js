@@ -199,7 +199,6 @@ client.on("message", async message => {
     .split(/ +/g);
   const command = args.shift().toLowerCase();
   const serverQueue = queue.get(message.guild.id);
-  
 });
 
 function isYoutube(str) {
