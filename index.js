@@ -12,7 +12,7 @@ const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
 const role = "DJ";
 
 let p = "!";
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN); 
 
 client.on("ready", () => {
   console.log(
