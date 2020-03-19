@@ -149,7 +149,7 @@ bot.on("message", async message => {
     message.channel.send(repeat);
   }
   if (command === "summon") {
-      message.member.voiceChannel.join();
+    message.member.voiceChannel.join();
   }
   if (command === "leave") {
     message.member.voiceChannel.leave();
