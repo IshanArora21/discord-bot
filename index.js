@@ -6,7 +6,6 @@ const fs = require("fs");
 const getYoutubeID = require("get-youtube-id");
 const youtubeInfo = require("youtube-info");
 
-
 const clientToken = process.env.client_TOKEN;
 const youtubeAPIKey = process.env.YOUTUBE_API_KEY;
 const role = "DJ";
