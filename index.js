@@ -30,6 +30,7 @@ client.on("message", function(message) {
     .slice(1)
     .join(" ");
 
+
   if (!guilds[message.guild.id]) {
     guilds[message.guild.id] = {
       queue: [],
@@ -136,7 +137,6 @@ client.on("message", function(message) {
         codeblock = "```";
       }
     }
-
     codeblock += "```";
     message.channel.send(codeblock);
   } else if (msg.startsWith(prefix + "stop")) {
@@ -293,6 +293,7 @@ function splitTextByLines(text, maxCharsPerText) {
   if (maxCharsPerText == undefined) {
     maxCharsPerText = 2000;
   }
+
   const lines = text.split("\n");
   let messages = [""];
   let charCount = 0;
@@ -323,6 +324,7 @@ function splitTextByLines(text, maxCharsPerText) {
         }
       }
     }
+
   }
   for (let i = 0; i < messages.length; i++) {
     messages[i] = messages[i].trim();
