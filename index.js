@@ -30,7 +30,6 @@ client.on("message", function(message) {
     .slice(1)
     .join(" ");
 
-
   if (!guilds[message.guild.id]) {
     guilds[message.guild.id] = {
       queue: [],
@@ -324,7 +323,6 @@ function splitTextByLines(text, maxCharsPerText) {
         }
       }
     }
-
   }
   for (let i = 0; i < messages.length; i++) {
     messages[i] = messages[i].trim();
