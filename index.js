@@ -19,7 +19,7 @@ client.once("disconnect", () => {
   console.log("Disconnect!");
 });
 
-client.on("message", async message => {
+client.on("message", async (message) => {
   if (message.author.bot) return;
   if (!message.content.startsWith(prefix)) return;
 
@@ -56,9 +56,9 @@ async function execute(message, serverQueue) {
 
   const songInfo = await ytdl.getInfo(args[1]);
   const song = {
-        title: songInfo.videoDetails.title,
-        url: songInfo.videoDetails.video_url,
-   };
+    title: songInfo.videoDetails.title,
+    url: songInfo.videoDetails.video_url,
+  };
 
   if (!serverQueue) {
     const queueContruct = {
@@ -67,7 +67,7 @@ async function execute(message, serverQueue) {
       connection: null,
       songs: [],
       volume: 5,
-      playing: true
+      playing: true,
     };
 
     queue.set(message.guild.id, queueContruct);
@@ -104,10 +104,10 @@ function stop(message, serverQueue) {
     return message.channel.send(
       "You have to be in a voice channel to stop the music!"
     );
-    
+
   if (!serverQueue)
     return message.channel.send("There is no song that I could stop!");
-    
+
   serverQueue.songs = [];
   serverQueue.connection.dispatcher.end();
 }
@@ -126,7 +126,7 @@ function play(guild, song) {
       serverQueue.songs.shift();
       play(guild, serverQueue.songs[0]);
     })
-    .on("error", error => console.error(error));
+    .on("error", (error) => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
