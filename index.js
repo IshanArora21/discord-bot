@@ -21,7 +21,7 @@ client.once("disconnect", () => {
 
 client.on("message", async (message) => {
   if (message.author.bot) return;
-  if (message.author.id == 388052737889402902)
+  if (message.author.id == 252154087829798912)
     return message.channel.send("YOU HAVE NO BITCHES!");
 });
 
