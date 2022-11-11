@@ -19,12 +19,6 @@ client.once("disconnect", () => {
   console.log("Disconnect!");
 });
 
-client.on("message", async (message) => {
-  if (message.author.bot) return;
-  if (message.author.id == 252154087829798912)
-    return message.channel.send("YOU HAVE NO BITCHES!");
-});
-
 async function execute(message, serverQueue) {
   const args = message.content.split(" ");
 
